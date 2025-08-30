@@ -101,7 +101,14 @@ Automatic empty lines management for better code readability.
 
 Automatic replacement of `type` with `interface` for React Props.
 
+<!-- eslint-disable import/no-extraneous-dependencies -->
+<!-- eslint-disable @typescript-eslint/consistent-type-imports -->
+<!-- eslint-disable n/no-extraneous-import -->
+<!-- eslint-disable perfectionist/sort-intersection-types -->
+
 ```tsx
+import { ComponentPropsWithRef } from 'react';
+
 // Bad example
 export type BadInputProps = ComponentPropsWithRef<'input'> & {
   type: number; // no error and <input /> gets an invalid property 👎
@@ -147,15 +154,13 @@ with custom JSDoc rules:
 
 Handles general comment spacing with balanced blocks.
 
-<!-- eslint-disable spaced-comment -->
+<!-- eslint-disable @stylistic/spaced-comment -->
 
 ```javascript
 // ❌ Incorrect
 //This is a comment
 /*This is a comment*/
 ```
-
-<!-- eslint-enable spaced-comment -->
 
 ```javascript
 // ✅ Correct
@@ -169,16 +174,17 @@ Handles general comment spacing with balanced blocks.
 
 Ensures space after `*` in JSDoc lines.
 
+<!-- prettier-ignore-start -->
 <!-- eslint-disable jsdoc/check-alignment, custom/jsdoc-space-after-asterisk -->
 
 ```javascript
 // ❌ Incorrect
 /**
- *Example Content
- */
+*Example Content
+*/
 ```
 
-<!-- eslint-enable jsdoc/check-alignment, custom/jsdoc-space-after-asterisk -->
+<!-- prettier-ignore-end -->
 
 ```javascript
 // ✅ Correct
@@ -203,8 +209,6 @@ Prevents multiple empty lines within JSDoc blocks.
  */
 ```
 
-<!-- eslint-enable custom/jsdoc-multiple-empty-lines -->
-
 ```javascript
 // ✅ Correct
 /**
@@ -228,8 +232,6 @@ export const before = 1;
  */
 export const after = 1;
 ```
-
-<!-- eslint-enable custom/jsdoc-empty-line-before -->
 
 ```javascript
 // ✅ Correct
@@ -256,8 +258,6 @@ Prevents empty lines at JSDoc start.
 export const after = 1;
 ```
 
-<!-- eslint-enable custom/jsdoc-no-empty-start -->
-
 ```javascript
 // ✅ Correct
 /**
@@ -280,8 +280,6 @@ Requires not empty line after JSDoc comments.
 
 export const after = 1;
 ```
-
-<!-- eslint-enable custom/jsdoc-empty-line-after -->
 
 ```javascript
 // ✅ Correct
@@ -306,8 +304,6 @@ Prevents empty lines at JSDoc end.
 export const after = 1;
 ```
 
-<!-- eslint-enable custom/jsdoc-no-empty-end -->
-
 ```javascript
 // ✅ Correct
 /**
@@ -327,8 +323,6 @@ Enforces block comment format for JSDoc.
 /** Example Content */
 export const after = 1;
 ```
-
-<!-- eslint-enable jsdoc/multiline-blocks, custom/jsdoc-multiline -->
 
 ```javascript
 // ✅ Correct
