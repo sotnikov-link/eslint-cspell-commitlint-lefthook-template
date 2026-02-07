@@ -1,6 +1,8 @@
-import { type UserConfig } from '@commitlint/types';
-import { RuleConfigSeverity as Level } from '@commitlint/types';
-import { readdirSync } from 'fs';
+import { readdirSync } from 'node:fs';
+import {
+  RuleConfigSeverity as Level,
+  type UserConfig,
+} from '@commitlint/types';
 
 const packageDirectoryList: string[] = [];
 
@@ -22,8 +24,8 @@ const Configuration: UserConfig = {
   ignores: [(commit) => commit.startsWith('Pull request #')],
   rules: {
     'scope-empty': [Level.Error, 'never'],
-    'scope-enum': [Level.Error, 'always', ['root', ...packageDirectoryList]],
     'scope-separates-with-comma-and-space': [Level.Error, 'always'],
+    'scope-enum': [Level.Error, 'always', ['root', ...packageDirectoryList]],
   },
   plugins: [
     {
