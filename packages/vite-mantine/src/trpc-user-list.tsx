@@ -17,7 +17,6 @@ export const TrpcUserList = memo(() => {
             </Text>
           ))}
         </Box>
-
         <Center>
           <Button
             type="button"

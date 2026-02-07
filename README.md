@@ -101,15 +101,24 @@ Automatic empty lines management for better code readability.
 
 Automatic replacement of `type` with `interface` for React Props.
 
-```ts
-// Bad example
-type BadInputProps = ComponentPropsWithRef<'input'> & {
-  type: number; // no error and <input /> gets an invalid property :(
-};
+<!-- eslint-disable import/no-extraneous-dependencies -->
+<!-- eslint-disable @typescript-eslint/consistent-type-imports -->
+<!-- eslint-disable n/no-extraneous-import -->
+<!-- eslint-disable perfectionist/sort-intersection-types -->
 
+```tsx
+import { ComponentPropsWithRef } from 'react';
+
+// Bad example
+export type BadInputProps = ComponentPropsWithRef<'input'> & {
+  type: number; // no error and <input /> gets an invalid property 👎
+};
+```
+
+```tsx
 // Good example
-interface GoodInputProps extends ComponentPropsWithRef<'input'> {
-  type: number; // TypeScript error :)
+export interface GoodInputProps extends ComponentPropsWithRef<'input'> {
+  type: number; // TypeScript error 👍
 }
 ```
 
@@ -131,6 +140,203 @@ YourComponent.displayName = 'YourComponent';
 ### JSDoc Rules
 
 Rules for correct JSDoc comment formatting.
+
+The project uses a hybrid approach combining `@stylistic/eslint-plugin` rules
+with custom JSDoc rules:
+
+- **@stylistic/spaced-comment** — handles general comment spacing with balanced
+  blocks
+- **Custom JSDoc rules** — handle JSDoc-specific formatting requirements
+
+**@stylistic Rule Examples:**
+
+#### @stylistic/spaced-comment
+
+Handles general comment spacing with balanced blocks.
+
+<!-- eslint-disable @stylistic/spaced-comment -->
+
+```javascript
+// ❌ Incorrect
+//This is a comment
+/*This is a comment*/
+```
+
+```javascript
+// ✅ Correct
+// This is a comment
+/* This is a comment */
+```
+
+**JSDoc Rule Examples:**
+
+#### jsdoc-space-after-asterisk
+
+Ensures space after `*` in JSDoc lines.
+
+<!-- prettier-ignore-start -->
+<!-- eslint-disable jsdoc/check-alignment, custom/jsdoc-space-after-asterisk -->
+
+```javascript
+// ❌ Incorrect
+/**
+*Example Content
+*/
+```
+
+<!-- prettier-ignore-end -->
+
+```javascript
+// ✅ Correct
+/**
+ * Example Content
+ */
+```
+
+#### jsdoc-multiple-empty-lines
+
+Prevents multiple empty lines within JSDoc blocks.
+
+<!-- eslint-disable custom/jsdoc-multiple-empty-lines -->
+
+```javascript
+// ❌ Incorrect
+/**
+ * Example Content
+ *
+ *
+ * More content
+ */
+```
+
+```javascript
+// ✅ Correct
+/**
+ * Example Content
+ *
+ * More content
+ */
+```
+
+#### jsdoc-empty-line-before
+
+Requires empty line before JSDoc comments.
+
+<!-- eslint-disable custom/jsdoc-empty-line-before -->
+
+```javascript
+// ❌ Incorrect
+export const before = 1;
+/**
+ * Example Content
+ */
+export const after = 1;
+```
+
+```javascript
+// ✅ Correct
+export const before = 1;
+
+/**
+ * Example Content
+ */
+export const after = 1;
+```
+
+#### jsdoc-no-empty-start
+
+Prevents empty lines at JSDoc start.
+
+<!-- eslint-disable custom/jsdoc-no-empty-start -->
+
+```javascript
+// ❌ Incorrect
+/**
+ *
+ * Example Content
+ */
+export const after = 1;
+```
+
+```javascript
+// ✅ Correct
+/**
+ * Example Content
+ */
+export const after = 1;
+```
+
+#### jsdoc-empty-line-after
+
+Requires not empty line after JSDoc comments.
+
+<!-- eslint-disable custom/jsdoc-empty-line-after -->
+
+```javascript
+// ❌ Incorrect
+/**
+ * Example Content
+ */
+
+export const after = 1;
+```
+
+```javascript
+// ✅ Correct
+/**
+ * Example Content
+ */
+export const after = 1;
+```
+
+#### jsdoc-no-empty-end
+
+Prevents empty lines at JSDoc end.
+
+<!-- eslint-disable custom/jsdoc-no-empty-end -->
+
+```javascript
+// ❌ Incorrect
+/**
+ * Example Content
+ *
+ */
+export const after = 1;
+```
+
+```javascript
+// ✅ Correct
+/**
+ * Example Content
+ */
+export const after = 1;
+```
+
+#### jsdoc-multiline
+
+Enforces block comment format for JSDoc.
+
+<!-- eslint-disable jsdoc/multiline-blocks, custom/jsdoc-multiline -->
+
+```javascript
+// ❌ Incorrect
+/** Example Content */
+export const after = 1;
+```
+
+```javascript
+// ✅ Correct
+/**
+ * Example Content
+ */
+export const after = 1;
+```
+
+**Why Hybrid Approach:**
+
+- `@stylistic` rules provide general code formatting
+- Custom rules handle JSDoc-specific syntax and context requirements
+- Ensures comprehensive formatting coverage for both code and JSDoc
 
 ## 🔧 Recommended Tools
 
@@ -160,11 +366,11 @@ Rules for correct JSDoc comment formatting.
 ## 📁 Project Structure
 
 ```
-├── eslint/                 # Custom ESLint rules
-│   ├── empty-lines/       # Empty lines rules
+├── eslint/               # Custom ESLint rules
+│   ├── empty-lines/      # Empty lines rules
 │   ├── jsdoc/            # JSDoc rules
-│   └── react/            # React-specific rules
-├── packages/              # Template projects
+│   └── react/            # React rules
+├── packages/             # Template projects
 │   ├── trpc-service/     # tRPC backend
 │   ├── vite-mantine/     # React frontend
 │   └── tsconfig/         # Shared TS config

@@ -5,13 +5,7 @@ module.exports = {
   singleQuote: true,
   overrides: [
     {
-      files: '*.md',
-      options: {
-        proseWrap: 'always',
-      },
-    },
-    {
-      files: '*.mdc',
+      files: ['*.md', '*.mdc'],
       options: {
         proseWrap: 'always',
       },
